@@ -1,0 +1,16 @@
+# -*- mode: sh -*-
+
+# fzf-gcloud-configset-project-
+# author: Seong Yong-ju <sei40kr@gmail.com>
+
+fzf-gcloud-config-set-project() {
+    local project="$(gcloud projects list |
+        eval "fzf ${FZF_DEFAULT_OPTS} --header-lines=1" |
+        awk '{ print $1 }')"
+
+    if [[ -n "$project" ]]; then
+        gcloud config set project "$project"
+    fi
+}
+
+fzf-gcloud-config-set-project "$@"
